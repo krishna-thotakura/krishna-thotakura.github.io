@@ -1,0 +1,45 @@
+## Aspects are your friends - Performance Measuring your interesting methods
+Aspects are really nice to use for cross cutting concerns such as Auditing or Performance Monitoring.
+
+For example, you want to time few method calls and keep an eye on them.
+```
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD})
+public @interface TimeMe
+{
+
+   public long threshold() default 30;
+
+}
+```
+You defined an annotation @TimeMe which can be used on any method you want to measure. Default threshold is set to 30 seconds.
+```
+@Component
+@Aspect
+public class TimeMeAdvice {
+  
+  @Around("execution(@packagename.TimeMe * packagename..*.*(..))") 
+   public Object timeActivity(ProceedingJoinPoint aPoint) throws Throwable {
+      .....
+      TimeMe timeMeAnnotation = method.getAnnotation(TimeMe.class);
+      long threshold = timeMeAnnotation.threshold();
+
+      ... Use StopWatch api..
+      Object returnValue = null;
+      try {
+         clock.start();
+        returnValue = aPoint.proceed();
+      } catch (Throwable ex) {
+         throw ex;
+       } finally {
+         clock.stop();
+         if (clock.getTotalTimeSeconds() > threshold) {
+            LOG.warn("watch out..{}", clock.shortSummary());
+         } else {
+            LOG.debug(clock.shortSummary());
+         }
+       }
+      return returnValue;
+  }
+}
+```
