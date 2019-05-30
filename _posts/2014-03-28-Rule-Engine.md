@@ -1,4 +1,8 @@
 ## Simple Rule Engine 
+
+![Rule Engine Class Diagram]({{ site.baseurl }}/images/GeneralRuleEngineClassDiagram.JPG "Simple Rule Engine")
+
+
 ```
 public abstract class Rule<T> {
  private String name;
