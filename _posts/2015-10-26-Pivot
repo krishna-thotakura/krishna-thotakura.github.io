@@ -1,0 +1,15 @@
+## Using Pivot to turn multiple rows into columns
+
+Generally, normalization is good. But sometimes, over normalization can cause headaches/slowness, especially, when generating reports vs performing single transactions.
+
+Example:
+Let us say you have a table Employee(name) with 1-to-many relationship to Contact(emp_name, type, value) 
+```
+Employee('Jack')
+Contact('Jack', 'phone', ‘23232’)
+Contact('Jack', 'email', ‘j@k.com’)
+
+select * from(
+       select  * from employee e inner join Contact c on e.name = c.emp_name
+) pivot ( MAX(value) for (type ) in ( ‘phone’, ‘email’));
+```
