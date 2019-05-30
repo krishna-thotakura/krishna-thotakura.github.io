@@ -11,15 +11,18 @@ Also, if in the course of your processing, you plan to change the status of the 
 In such a scenario, you may want to think about other simpler row limit implementations as shown below.
 
 1. Plain Vanilla JPA Implementation
+```
                   Query query = entityManager.createQuery("select app from Appointment app where app.status = 'NEED PROCESSING'");
                   query.setFirstResult(0);
                   query.setMaxResults(limitRowCount);
                   List<Appointment> apptRqsts = (List<Appointment>)query.getResultList();
                   return apptRqsts;
+ ```
 
 2. QueryDSL + JPA
-                  JPAQuery query = new JPAQuery(entityManager);
+```                  JPAQuery query = new JPAQuery(entityManager);
                   QApptRqst qApptRqst = new QApptRqst("qApptRqst");
                   List<ApptRqst> resultList = query.from(qApptRqst)                                                                   .where(qApptRqst.apptRqstStatusRef.apptRqstStatusCd.eq("NEED PROCESSING"))
                                     .limit(limitRowCount)
                                     .list(qApptRqst);
+```
