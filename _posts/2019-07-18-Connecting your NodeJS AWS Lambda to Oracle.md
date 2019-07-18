@@ -19,11 +19,14 @@ To create your lambda deployment zip , here are steps to follow.
 6. Perform usual lambda checks. 
    Make sure all .so files in your dist/lib folder have 755 permissions.
    Make sure your lambda function code and node_modules/** have 644 permissions.
+   Your dist folder should look like below.
 7. zip up your entire dist folder, keeping symlinks intact.
    cd dist
    zip ../xyz.zip --symlinks -r .
 8. Verify the zip. 
    zipinfo xyz.zip
+9. upload your zip file to s3 and have your lambda using the package from s3.
 
-upload your zip file to s3 and have your lambda using the package from s3.
+ ![Zip deployment package for connecting to Oracle from Lambda](../images/external-libraries-in-lambda.PNG)
+
 
