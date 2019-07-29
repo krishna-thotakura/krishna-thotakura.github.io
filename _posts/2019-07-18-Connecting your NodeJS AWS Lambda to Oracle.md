@@ -1,32 +1,38 @@
 
-How to connect your AWS Lambda NodeJS application to connect to Oracle Database
+## Accessing Oracle from AWS Lambda NodeJS application
 
-Pre-reqs:
+#### Pre-reqs
+* Node 10.16.x 
+* NPM oracledb package
+* Download oracle Instant Client light linux version zip file from https://www.oracle.com/database/technologies/instant-client/downloads.html to /tmp
 
-You are using Node 10.16.x 
-Update package.json to pull in oracledb from NPM. Note: At this time, there is a binary available for Node 10.x but not for newer Node 12.x. Anyway, since AWS lambda comes with Node 10.x runtime, it is good to stick with Node 10.x
+### Creating your Lamdba deployment zip file
 
-To create your lambda deployment zip , here are steps to follow.
+Let us say you are developing your lambda code in the directory lambda-app and you are going to create a dist folder containing all the files that will be deployed to lambda.
+```
+mkdir dist
+cp index.js dist/
+cp -R node_modules/oracledb/** dist/
 
-1. Let us say your going to zip up everything in folder dist.
-2. copy your lambda function code into dist.
-3. copy node_modules/oracledb/** into dist. (You dont need other node modules that are already available via the lambda nodejs runtime)
-4. Download oracle Instant Client from https://www.oracle.com/database/technologies/instant-client/downloads.html
-   I picked the linux light version that comes in a zip file.
-   Unpack the zip file to dist/lib folder.
-   Make sure you are doing this in a unix environment so that the symlinks are maintained.
-5. Find libaio* from your linux machine. They may be in /usr/lib64/. Copy the libaio.so symlink and the real file into your dist/lib folder.
-6. Perform usual lambda checks. 
-   Make sure all .so files in your dist/lib folder have 755 permissions.
-   Make sure your lambda function code and node_modules/** have 644 permissions.
-   Your dist folder should look like below.
-7. zip up your entire dist folder, keeping symlinks intact.
-   cd dist
-   zip ../xyz.zip --symlinks -r .
-8. Verify the zip. 
-   zipinfo xyz.zip
-9. upload your zip file to s3 and have your lambda using the package from s3.
+mkdir -p dist/lib
+unzip /tmp/instantclient-basiclite-linux.x64-19.3.0.0.0dbru.zip -d dist/lib/
 
+# The symlinks in dist/lib folder should be intact and not dereferenced.
+cp -H /usr/lib64/libaio* dist/lib/
+
+# Ensure rw permissions for lambda.
+find . -type d -print0 |xargs -0 chmod 755
+find . -type f -print0 |xargs -0 chmod 644
+chmod 755 dist/lib/*.so
+
+# Now zip up your entire dist folder
+cd dist
+zip ../xyz.zip --symlinks -r .
+
+# Verify the zip file
+zipinfo xyz.zip
+````
+Your zip file should look similar to below.
  ![Zip deployment package for connecting to Oracle from Lambda](../images/external-libraries-in-lambda.PNG)
 
-
+Upload the zip file to s3 and have your lambda use the zip deployment package from s3.
