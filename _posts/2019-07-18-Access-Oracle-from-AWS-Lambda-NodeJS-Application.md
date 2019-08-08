@@ -7,12 +7,14 @@
 
 ### Creating your Lamdba deployment zip file
 
-Let us assume you are developing your lambda code in the folder lambda-app, but ultimately your dist folder will contain all the files that need to be deployed to lambda.
+Let us assume your current working directory contains your lambda code in ```index.js```, but ultimately your ```dist``` folder will contain all the files that are to be deployed to lambda.
 ```
 mkdir dist
 cp index.js dist/
+# Lambda already has the nodejs common libraries. You need to however copy over the oracledb library.
 cp -R node_modules/oracledb/** dist/
 
+# Binaries files needed by your nodejs libraries should go into the lib folder.
 mkdir -p dist/lib
 unzip /tmp/instantclient-basiclite-linux.x64-19.3.0.0.0dbru.zip -d dist/lib/
 
