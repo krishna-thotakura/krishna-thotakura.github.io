@@ -32,8 +32,9 @@ zip ../xyz.zip --symlinks -r .
 
 # Verify the zip file
 zipinfo xyz.zip
-````
-Your zip file should look similar to below.
- ![Zip deployment package for connecting to Oracle from Lambda](../images/external-libraries-in-lambda.PNG)
+```
+Contents of your zip file should look similar to below.
+ ![contents of dist folder](../images/external-libraries-in-lambda-1.PNG)
+ ![contents of dist/lib folder](../images/external-libraries-in-lambda-2.PNG)
 
 Upload the zip file to s3 and have your lambda use the zip deployment package from s3.
