@@ -1,14 +1,13 @@
 
-## Accessing Oracle from AWS Lambda NodeJS application
 
-#### Pre-reqs
+#### You will need
 * Node 10.16.x 
-* NPM oracledb package
+* NPM oracledb package - https://www.npmjs.com/package/oracledb
 * Download oracle Instant Client light linux version zip file from https://www.oracle.com/database/technologies/instant-client/downloads.html to /tmp
 
 ### Creating your Lamdba deployment zip file
 
-Let us say you are developing your lambda code in the directory lambda-app and you are going to create a dist folder containing all the files that will be deployed to lambda.
+Let us assume you are developing your lambda code in the folder lambda-app, but ultimately your dist folder will contain all the files that need to be deployed to lambda.
 ```
 mkdir dist
 cp index.js dist/
