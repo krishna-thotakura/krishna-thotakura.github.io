@@ -1,9 +1,9 @@
 
 
 #### You will need
-* Node 10.16.x 
-* NPM oracledb package - https://www.npmjs.com/package/oracledb
-* Download oracle Instant Client light linux version zip file from https://www.oracle.com/database/technologies/instant-client/downloads.html to /tmp
+* Node 10.16.x. (Newer node version may not help because you may not easily find compatible oracledb package) 
+* [NPM oracledb package](https://www.npmjs.com/package/oracledb)
+* [Oracle Instant Client light linux version zip file](https://www.oracle.com/database/technologies/instant-client/downloads.html) 
 
 ### Creating your Lamdba deployment zip file
 
