@@ -1,5 +1,5 @@
 
-### using Conditional Operator in Terraform to dynamically create resources
+### Using Conditional Operator in Terraform to dynamically create resources
 
 When using Terraform, sometimes you want to create a resource based on a condition. 
 
@@ -10,15 +10,6 @@ You can implement this using conditional operator, count and for_each as shown b
 
 
 ```terraform
-# s3 bucket for logs
-resource "aws_s3_bucket" "log_bucket" {
- bucket = "com.xyz-${var.environment}.logs"
- acl    = "log-delivery-write"
- count = "${var.environment != "loadtest" ? 1 : 0}"
-}
-
-
-
 # s3 storage for images
 resource "aws_s3_bucket" "images" {
  bucket = "com.xyz-${var.environment}.images.storage"
@@ -32,4 +23,12 @@ resource "aws_s3_bucket" "images" {
    }
  }
 }
+
+# s3 bucket for logs
+resource "aws_s3_bucket" "log_bucket" {
+ bucket = "com.xyz-${var.environment}.logs"
+ acl    = "log-delivery-write"
+ count = "${var.environment != "loadtest" ? 1 : 0}"
+}
+
 ```
