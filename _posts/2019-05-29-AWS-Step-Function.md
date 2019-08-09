@@ -1,5 +1,6 @@
 
-## 1-hour Timer
-When a request is submitted to S3, we were asked to not take any action for 1 hour, in case user changes their mind, and only then proceed with processing the request.
+## How to easily implement a 1-hour Timer in AWS 
 
-Using Cloudwatch monitoring on the S3 bucket, we fired a step function that waited 1 hour before kicking off processing using Lambda.
+If you are asked to not process an object put into S3 for exactly time specified(for example, 1 hour) and then only process the object, this can be done easily with AWS Step Function.
+
+Using Cloudwatch monitoring on the S3 bucket, fire a step function that waits for specified duration(1 hour) before kicking off processing using Lambda.
