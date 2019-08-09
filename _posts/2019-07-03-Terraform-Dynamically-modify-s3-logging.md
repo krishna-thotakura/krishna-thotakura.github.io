@@ -1,11 +1,13 @@
 
-### Dynamically modify s3 logging when using Terraform
+### using Conditional Operator in Terraform to dynamically create resources
 
-When using Terraform, How to disable S3 logging in AWS environment created for running load test but have it enabled in all other AWS environments by default ?
+When using Terraform, sometimes you want to create a resource based on a condition. 
 
-If you are using the same AWS account for multiple environments(dev, test, loadtest, etc), you probably want to enable logging on your s3 buckets by default. But when running loadtests, you dont really need logging and versioning enabled. Here is how you can modify your terraform scripts to enable this dynamic behavior.
+For example, Let us say you do not want server access logging on your s3 bucket in loadtest environment. This may be an environment that you build out and execute for few hours and then tear down everything. But you need server access logging on your s3 bucket enabled in all other environments, by default to comply with security policies.
 
-This technique can be applied to any blocks that are part of your terraform resources.
+You can implement this using conditional operator, count and for_each as shown below.
+
+
 
 ```terraform
 # s3 bucket for logs
