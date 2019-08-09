@@ -1,5 +1,7 @@
 ## Running multiple docker containers on a single host
 
+ ![Running multiple containers on single host](../images/multiple-containers.png)
+ 
 The four containers shown in the diagram below are :
 
 LocalStack container - Localstack mocks AWS resources so that you dont incur AWS costs when running tests. The localstack docker container starts up okay, but with a bunch of errors. 
@@ -18,4 +20,4 @@ Also, note that while all these containers can talk to each other when connected
 
 At the end, the microservice was able to use the S3 and Dynamodb endpoints on Localstack but couldnt connect to SQS port on localstack. This may be related to the startup errors seen in the localstack startup log.
 
- ![Running multiple containers on single host](../images/multiple-containers.png)
+
